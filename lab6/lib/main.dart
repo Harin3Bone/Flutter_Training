@@ -5,6 +5,7 @@ import 'homepage.dart';
 import 'dart:io';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 void main() => runApp(MyHome());
@@ -82,8 +83,11 @@ class MyRadio extends StatefulWidget {
 }
 
 class _MyRadioState extends State<MyRadio> {    
-  //! Craete date time format
-  final _format = DateFormat('dd/MM/YYYY');
+  //! Create file
+  File _avatar;
+
+  //! Create date time format
+  final _format = DateFormat('dd/MM/yyyy');
   
   //! Create local variable to use in -> InputDecorator
   // List<String> provinces = ['','BKK','Outbound'];
@@ -143,10 +147,16 @@ class _MyRadioState extends State<MyRadio> {
             buildSelectField(),
             
             //# Date Time
-            buildDateField()
-            
+            buildDateField(),
 
-          ],),
+            _avatar == null ? RaisedButton(
+              onPressed: (){
+                onChooseImage();
+              },
+              child: Text('Choose Avatar'),
+            )
+            : Image.file(_avatar)
+          ]),
     );
   }
 
@@ -250,6 +260,13 @@ class _MyRadioState extends State<MyRadio> {
             lastDate: DateTime(2100));
         }
       );
+  }
+
+  onChooseImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _avatar = image;
+    });
   }
 }
 
