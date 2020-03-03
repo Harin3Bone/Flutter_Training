@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
 }
 
 
-class MyRadio extends StatefulWidget {
+class MyRadio extends StatefulWidget {    
   MyRadio({Key key}) : super(key: key);
 
   @override
@@ -82,6 +82,9 @@ class MyRadio extends StatefulWidget {
 }
 
 class _MyRadioState extends State<MyRadio> {    
+  //! Craete date time format
+  final _format = DateFormat('dd/MM/YY');
+  
   //! Create local variable to use in -> InputDecorator
   // List<String> provinces = ['','BKK','Outbound'];
   List<String> provinces = ['BKK','Pathumthani','Outbound'];
@@ -116,11 +119,11 @@ class _MyRadioState extends State<MyRadio> {
               radioFemaleMethod(),
 
               Text('Female'),
-            ]),
+            ],),
 
             Row(children: [
               Text('$sex'),              
-            ]),
+            ],),
 
             Row(children: [
               //# Checkbox A 
@@ -133,12 +136,17 @@ class _MyRadioState extends State<MyRadio> {
                 
               Text('Checkbox B'),              
 
-            ]),            
+             
+            ],),            
 
             //# Dropdown
-              buildSelectField()
+            buildSelectField(),
+            
+            //# Date Time
+            buildDateField()
+            
 
-          ]),
+          ],),
     );
   }
 
@@ -230,6 +238,19 @@ class _MyRadioState extends State<MyRadio> {
     );
   }
 
+  DateTimeField buildDateField(){
+    return DateTimeField(
+        decoration: InputDecoration(labelText: 'Birth Date'),
+        format : _format,
+        onShowPicker: (context, currentValue){
+          return showDatePicker(
+            context: context, 
+            initialDate: currentValue ?? DateTime.now(), 
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2100));
+        }
+      );
+  }
 }
 
 
