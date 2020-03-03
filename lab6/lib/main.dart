@@ -83,7 +83,7 @@ class MyRadio extends StatefulWidget {
 
 class _MyRadioState extends State<MyRadio> {    
   //! Craete date time format
-  final _format = DateFormat('dd/MM/YY');
+  final _format = DateFormat('dd/MM/YYYY');
   
   //! Create local variable to use in -> InputDecorator
   // List<String> provinces = ['','BKK','Outbound'];
