@@ -26,6 +26,29 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: Text('Flutter Demo'),
       ),
+      //! Add Drawer
+      drawer: Drawer(
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Drawer Header'),
+                decoration: BoxDecoration(
+                  color : Colors.blue,
+                ),
+                ),
+                ListTile(
+                  title:Text('Item 1'),
+                  onTap: (){}
+                ),
+                ListTile(
+                  title: Text('Item 2'),
+                  onTap: (){},
+                ),
+            ],
+          ),
+        )),
       body: Center(
           child: ListView(children: <Widget>[
         MyRadio(),
@@ -40,9 +63,15 @@ class MyRadio extends StatefulWidget {
 
   @override
   _MyRadioState createState() => _MyRadioState();
+  
 }
 
-class _MyRadioState extends State<MyRadio> {
+class _MyRadioState extends State<MyRadio> {    
+  //! Create local variable to use in -> InputDecorator
+  // List<String> provinces = ['','BKK','Outbound'];
+  List<String> provinces = ['BKK','Pathumthani','Outbound'];
+  String province = 'BKK';
+  
   //! Checkbox widget create
   bool checkboxValueA = true;
   bool checkboxValueB = true;
@@ -62,74 +91,130 @@ class _MyRadioState extends State<MyRadio> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(children: [              
-              //# Radio = Radio Button
-              Radio(                
-                // value: 1,
-                value: 'Male',
-                groupValue: sex,
-                onChanged: (value) {
-                  setState(() {
-                    // route = value;
-                    sex = value;
-                  });
-                },
-              ),
+            Row(children: [
+              //# Male Radio Button                            
+              radioMaleMethod(),
 
-              Text('Male'),
+              Text('Male'),            
 
-              //# Radio = Radio Button
-              Radio(
-                // value: 0,
-                value: 'Female',
-                groupValue: sex,
-                onChanged: (value) {
-                  // _handleTapboxChanged(value);
-                  setState(() {
-                    // route = value;
-                    sex = value;
-                  });
-                },
-              ),
+              //# Female Radio Button
+              radioFemaleMethod(),
 
               Text('Female'),
             ]),
+
             Row(children: [
-              Checkbox(
-                value: checkboxValueA, 
+              Text('$sex'),              
+            ]),
 
-                //! onChange = method -> 
-                onChanged: (bool value){
+            Row(children: [
+              //# Checkbox A 
+              checkboxAMethod(),
 
-                  //? setState = change UI
-                  setState(() {
-                    checkboxValueA = value;
-                    print(checkboxValueA);
-                  });
-                }),
+              Text('Checkbox A'),
 
-                Text('Checkbox A'),
-
-                Checkbox(
-                value: checkboxValueB, 
-
-                //! onChange = method -> 
-                onChanged: (bool value){
-
-                  //? setState = change UI
-                  setState(() {
-                    checkboxValueB = value;
-                    print(checkboxValueB);
-                  });
-                }),
+              //# Checkbox B
+              checkboxBMethod(),
                 
-                Text('Checkbox B'),
+              Text('Checkbox B'),              
 
-            ]),
-            Row(children: [
-              Text('$sex'),
-            ]),
+            ]),            
+
+            //# Dropdown
+              buildSelectField()
+
           ]),
     );
   }
+
+  Checkbox checkboxBMethod() {
+    return Checkbox(
+          value: checkboxValueB, 
+
+          //! onChange = method ->
+            //! true    = when checkbox is checked
+            //! false   = when checkbox not checked 
+          onChanged: (bool value){
+            //? setState = change UI
+            setState(() {
+              checkboxValueB = value;
+              print(checkboxValueB);
+            });
+          });
+  }
+
+  Checkbox checkboxAMethod() {
+    return Checkbox(
+              value: checkboxValueA, 
+
+              //! onChange  = method -> 
+                //! true    = when checkbox is checked
+                //! false   = when checkbox not checked
+              onChanged: (bool value){
+
+                //? setState = change UI
+                setState(() {
+                  checkboxValueA = value;
+                  print(checkboxValueA);
+                });
+              });
+  }
+
+  Radio<String> radioFemaleMethod() {
+    return Radio(
+              // value: 0,
+              value: 'Female',
+              groupValue: sex,
+              onChanged: (value) {
+                // _handleTapboxChanged(value);
+                setState(() {
+                  // route = value;
+                  sex = value;
+                });
+              },
+            );
+  }
+
+  Radio<String> radioMaleMethod() {
+    return Radio(                
+              // value: 1,
+              value: 'Male',
+              groupValue: sex,
+              onChanged: (value) {
+                setState(() {
+                  // route = value;
+                  sex = value;
+                });
+              },
+            );
+  }
+
+  InputDecorator buildSelectField(){  
+    return InputDecorator(
+      decoration: InputDecoration(labelText: 'Province'),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          value : province, 
+          onChanged: (value){
+            setState((){
+              province = value;
+            });
+          },
+          
+          items: provinces
+            .map(
+              (value) => DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              ),
+            )
+
+            //! 
+            .toList(),
+            )),
+    );
+  }
+
 }
+
+
