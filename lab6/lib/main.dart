@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lab6/pageA.dart';
+import 'package:lab6/pageB.dart';
+import 'homepage.dart';
 
 void main() => runApp(MyHome());
 
@@ -10,7 +13,9 @@ class MyHome extends StatelessWidget {
       title: appTitle,
       initialRoute: '/',
       routes: {
-        // '/homepage': (context) => Homepage(),
+        '/homepage': (context) => Homepage(),
+        '/pageA': (context) => pageA(),
+        '/pageB': (context) => pageB()
       },
       home: MyApp(title: appTitle),
     );
