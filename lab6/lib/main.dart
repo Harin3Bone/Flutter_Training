@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lab6/pageA.dart';
 import 'package:lab6/pageB.dart';
 import 'homepage.dart';
+import 'dart:io';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
+
 
 void main() => runApp(MyHome());
 
@@ -14,8 +18,8 @@ class MyHome extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/homepage': (context) => Homepage(),
-        '/pageA': (context) => pageA(),
-        '/pageB': (context) => pageB()
+        '/pageA': (context) => ProfilePage(),
+        '/pageB': (context) => SettingPage()
       },
       home: MyApp(title: appTitle),
     );
@@ -44,12 +48,18 @@ class MyApp extends StatelessWidget {
                 ),
                 ),
                 ListTile(
-                  title:Text('Item 1'),
-                  onTap: (){}
+                  title:Text('Profile'),
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/pageA');
+                  }
                 ),
                 ListTile(
-                  title: Text('Item 2'),
-                  onTap: (){},
+                  title: Text('Setting'),
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/pageB');
+                  },
                 ),
             ],
           ),

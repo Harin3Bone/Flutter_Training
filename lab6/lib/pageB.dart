@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-class pageB extends StatelessWidget {
-  const pageB({Key key}) : super(key: key);
+class SettingPage extends StatelessWidget {
+  const SettingPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Text('Setting'), 
+        ),
+      ),
     );
   }
 }
